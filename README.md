@@ -22,9 +22,9 @@ Analyse des données LinkedIn avec Snowflake et Streamlit dans le cadre d'un pro
 
 
 
-## 1. CONFIGURATION DE LA BASE DE DONNÉES
+## 1. CODE SQL :
 
-### CRÉATION DE LA BASE ET DU SCHÉMA
+
 ```sql
 CREATE database linkedin ;
 CREATE SCHEMA LINKEDIN.linkedin_job;
@@ -38,20 +38,20 @@ LIST @linkedin_stage;
 
 CREATE OR REPLACE FILE FORMAT CSV_FORMAT
 TYPE = 'CSV'
-FIELD_DELIMITER = ','           -- Les colonnes sont séparées par des virgules
-RECORD_DELIMITER = '\n'         -- Les lignes sont séparées par des retours à la ligne
-SKIP_HEADER = 1                 -- Ignorer la première ligne (= noms des colonnes)
-FIELD_OPTIONALLY_ENCLOSED_BY = '"'  -- Les textes peuvent être entre guillemets
-TRIM_SPACE = TRUE               -- Supprimer les espaces en trop
-ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE  -- Ne pas planter s'il manque une colonne
-NULL_IF = ('', 'NULL', 'null', 'N/A', 'n/a')  -- Considérer ces valeurs comme vides
+FIELD_DELIMITER = ','           
+RECORD_DELIMITER = '\n'        
+SKIP_HEADER = 1                 
+FIELD_OPTIONALLY_ENCLOSED_BY = '"'  
+TRIM_SPACE = TRUE               
+ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE  
+NULL_IF = ('', 'NULL', 'null', 'N/A', 'n/a') 
 EMPTY_FIELD_AS_NULL = TRUE; 
 
 
 CREATE OR REPLACE FILE FORMAT JSON_FORMAT
 TYPE = 'JSON'
-STRIP_OUTER_ARRAY = TRUE        -- Enlever les crochets [] du début/fin
-REPLACE_INVALID_CHARACTERS = TRUE  -- Remplacer les caractères bizarres
+STRIP_OUTER_ARRAY = TRUE        
+REPLACE_INVALID_CHARACTERS = TRUE  
 COMMENT = 'Format JSON pour les fichiers LinkedIn';
 
 
@@ -391,7 +391,7 @@ GROUP BY formatted_work_type ORDER BY nombre_offres DESC;
 
 
 
-## 4. CODE STREAMLIT
+## 2. CODE STREAMLIT
 
 ### IMPORTS ET CONFIGURATION
 ```python
@@ -548,7 +548,7 @@ st.altair_chart(chart5, use_container_width=True)
 st.dataframe(df5)
 ```
 
-## 5. PROBLÈMES RENCONTRÉS ET SOLUTIONS
+## 3. PROBLÈMES RENCONTRÉS ET SOLUTIONS
 
 ### **PROBLÈME 1 : DOUBLONS DANS LES DONNÉES**
 **Solution :** Utilisation de `CREATE TABLE ... AS SELECT DISTINCT` pour nettoyer les tables
@@ -562,7 +562,7 @@ st.dataframe(df5)
 
 
 
-## 7. CAPTURES D'ÉCRAN DES RÉSULTATS
+## 4. CAPTURES D'ÉCRAN DES RÉSULTATS
 
 ### ANALYSE 1 : TOP 10 DES TITRES PAR INDUSTRIE
 <img width="985" height="632" alt="image" src="https://github.com/user-attachments/assets/28ba6f65-1125-4301-a226-8e5ecbf1c92b" />
