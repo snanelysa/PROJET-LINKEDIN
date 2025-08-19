@@ -2,7 +2,7 @@
 # PROJET-LINKEDIN
 
 ## Description
-Analyse des données LinkedIn avec Snowflake et Streamlit dans le cadre d'un projet universitaire.
+Analyse des données LinkedIn avec Snowflake et Streamlit dans le cadre d'un projet de stage.
 
 ## Objectifs
 - Créer une base de données Snowflake
