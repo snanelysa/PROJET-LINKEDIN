@@ -47,20 +47,7 @@ Analyse complète de données d'offres d'emploi LinkedIn en utilisant Snowflake 
 4. **Répartition des offres par secteur d'activité**
 5. **Répartition des offres par type d'emploi**
 
-## Structure du Projet
-linkedin-analysis/
-├── sql/
-│   ├── 01_setup.sql
-│   ├── 02_tables.sql
-│   ├── 03_loading.sql
-│   ├── 04_cleaning.sql
-│   └── 05_analyses.sql
-├── streamlit/
-│   └── app.py
-├── docs/
-│   ├── problems_solutions.md
-│   └── technical_explanations.md
-└── README.md
+
 
 ## Méthode de Travail
 
