@@ -108,40 +108,6 @@ Commentaires détaillés sur l'architecture et les choix techniques.
 
 
 
-
-
-
-#Analyse 5 - Répartition par type d'emploi 
-
-st.title("Répartition des offres par type d'emploi")
-
-query5 = """
-SELECT formatted_work_type, COUNT(*) as nombre_offres 
-FROM JOB_POSTINGS 
-WHERE formatted_work_type IS NOT NULL
-GROUP BY formatted_work_type 
-ORDER BY nombre_offres DESC
-"""
-
-df5 = session.sql(query5).to_pandas()
-
-chart5 = alt.Chart(df5).mark_bar(
-    cornerRadiusTopLeft=3,
-    cornerRadiusTopRight=3).encode(
-    x=alt.X('NOMBRE_OFFRES:Q', title='Nombre d\'offres'),
-    y=alt.Y('FORMATTED_WORK_TYPE:N', title='Type d\'emploi', sort='-x'),
-    color=alt.Color('NOMBRE_OFFRES:Q', 
-                   scale=alt.Scale(scheme='blues', reverse=True),
-                   legend=alt.Legend(title="Nombre d'offres")),
-    tooltip=['FORMATTED_WORK_TYPE:N', 'NOMBRE_OFFRES:Q']).properties(
-    width=700, 
-    height=450,
-    title="Distribution des types d'emploi")
-
-st.altair_chart(chart5, use_container_width=True)
-st.dataframe(df5)
-```
-
 ## 3. PROBLÈMES RENCONTRÉS ET SOLUTIONS
 
 ### **PROBLÈME 1 : DOUBLONS DANS LES DONNÉES**
