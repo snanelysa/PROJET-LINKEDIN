@@ -72,7 +72,7 @@ Analyse complète de données d'offres d'emploi LinkedIn en utilisant Snowflake 
 ### [1. Commandes SQL](sql/)
 Scripts SQL complets avec explications détaillées.
 
-### [2. Code Streamlit](streamlit/)
+### [2. Code Streamlit](./Streamlit/app.py)
 Applications de visualisation et code des graphiques interactifs.
 
 ### [3. Problèmes et Solutions](docs/problems_solutions.md)
