@@ -26,9 +26,8 @@ LIST @linkedin_stage;
 
 
 ## 3. Création des formats de fichier
-
+### 3.1 format CSV
 ```sql
---format CSV
 CREATE OR REPLACE FILE FORMAT CSV_FORMAT
 TYPE = 'CSV'
 FIELD_DELIMITER = ','           
@@ -39,7 +38,9 @@ TRIM_SPACE = TRUE
 ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE  
 NULL_IF = ('', 'NULL', 'null', 'N/A', 'n/a') 
 EMPTY_FIELD_AS_NULL = TRUE;
---format  JSON
+```
+### 3.2 format  JSON
+```sql
 CREATE OR REPLACE FILE FORMAT JSON_FORMAT
 TYPE = 'JSON'
 STRIP_OUTER_ARRAY = TRUE        
