@@ -321,7 +321,6 @@ ALTER TABLE COMPANY_SPECIALITIES_CLEAN RENAME TO COMPANY_SPECIALITIES;
 ### 4.8 Table 
 
 ```sql
-
 CREATE OR REPLACE TABLE COMPANY_INDUSTRIES (
     company_id BIGINT,              
     industry VARCHAR(50) );        
@@ -334,14 +333,12 @@ FILE_FORMAT = JSON_FORMAT
 ON_ERROR = 'CONTINUE';
 
 SELECT * FROM COMPANY_INDUSTRIES LIMIT 5;
-
 -- Chercher les doublons
 SELECT company_id, industry, COUNT(*) as combien_fois
 FROM COMPANY_INDUSTRIES 
 GROUP BY company_id, industry
 HAVING COUNT(*) > 1
 LIMIT 5;
-
 -- Créer une version propre sans doublons
 CREATE OR REPLACE TABLE COMPANY_INDUSTRIES_CLEAN AS
 SELECT DISTINCT *
@@ -355,8 +352,103 @@ SELECT
 -- Remplacer l'ancienne table
 DROP TABLE COMPANY_INDUSTRIES;
 ALTER TABLE COMPANY_INDUSTRIES_CLEAN RENAME TO COMPANY_INDUSTRIES;
-
 ```
+
+
+### 5. analyse des donnée
+
+### Top 10 des titres de postes les plus publiés par industrie
+
+
+```sql
+WITH job_counts AS (SELECT ci.industry , jp.title,  COUNT(*) as nombre_offres,
+ROW_NUMBER() OVER (PARTITION BY ci.industry ORDER BY COUNT(*) DESC) as rang
+    FROM JOB_POSTINGS jp
+    JOIN COMPANY_INDUSTRIES ci ON jp.company_id = ci.company_id
+    WHERE jp.title IS NOT NULL 
+      AND ci.industry IS NOT NULL
+    GROUP BY ci.industry, jp.title )
+SELECT industry , title, nombre_offres, rang FROM job_counts
+WHERE rang <= 10
+ORDER BY industry, rang;
+```
+
+### Top 10 des postes les mieux rémunérés par industrie
+```sql
+WITH salary_ranks AS (SELECT  ci.industry, jp.title, jp.max_salary, jp.currency,
+    ROW_NUMBER() OVER (PARTITION BY ci.industry ORDER BY TRY_CAST(jp.max_salary AS NUMBER) DESC) as rang
+    FROM JOB_POSTINGS jp
+    JOIN COMPANY_INDUSTRIES ci ON jp.company_id = ci.company_id
+    WHERE jp.max_salary IS NOT NULL 
+      AND TRY_CAST(jp.max_salary AS NUMBER) > 0
+      AND ci.industry IS NOT NULL)
+SELECT industry, title, max_salary, currency,  rang FROM salary_ranks
+WHERE rang <= 10 ORDER BY industry, rang;
+```
+
+### Répartition des offres par taille d'entreprise
+```sql
+SELECT c.company_size, COUNT(*) as nombre_offres,
+ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM JOB_POSTINGS jp JOIN COMPANIES c2 ON jp.company_id = c2.company_id WHERE c2.company_size IS NOT NULL)), 2) as pourcentage
+FROM JOB_POSTINGS jp
+JOIN COMPANIES c ON jp.company_id = c.company_id
+WHERE c.company_size IS NOT NULL
+GROUP BY c.company_size ORDER BY c.company_size;
+```
+
+
+### Répartition des offres par secteur d'activité
+```sql
+SELECT  ci.industry , COUNT(*) as nombre_offres FROM JOB_POSTINGS jp
+JOIN COMPANY_INDUSTRIES ci ON jp.company_id = ci.company_id
+WHERE ci.industry IS NOT NULL
+GROUP BY ci.industry ORDER BY nombre_offres DESC;
+```
+
+### Répartition par type d'emploi
+```sql
+SELECT  formatted_work_type, COUNT(*) as nombre_offres FROM JOB_POSTINGS 
+WHERE formatted_work_type IS NOT NULL
+GROUP BY formatted_work_type ORDER BY nombre_offres DESC;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
