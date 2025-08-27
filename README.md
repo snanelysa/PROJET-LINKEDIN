@@ -109,19 +109,6 @@ Documentation des difficultés rencontrées et solutions appliquées.
 
 
 
-## 3. PROBLÈMES RENCONTRÉS ET SOLUTIONS
-
-### **PROBLÈME 1 : DOUBLONS DANS LES DONNÉES**
-**Solution :** Utilisation de `CREATE TABLE ... AS SELECT DISTINCT` pour nettoyer les tables
-
-### **PROBLÈME 2 : FORMATS DE DONNÉES INCONSISTANTS**
-**Solution :** Configuration des formats CSV et JSON avec gestion d'erreurs
-
-### **PROBLÈME 3 : PLOTLY NON DISPONIBLE DANS STREAMLIT SNOWFLAKE**
-**Solution :** Utilisation d'Altair comme alternative
-
-
-
 
 ## 4. CAPTURES D'ÉCRAN DES RÉSULTATS
 
