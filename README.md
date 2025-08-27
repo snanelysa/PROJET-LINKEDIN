@@ -75,11 +75,12 @@ Scripts SQL complets avec explications détaillées.
 ### [2. Code Streamlit](./Streamlit/app.py)
 Applications de visualisation et code des graphiques interactifs.
 
-### [3. Problèmes et Solutions](docs/problems_solutions.md)
+### [3. Captures d'écran des résultats ](docs/technical_explanations.md)
+Aperçus visuels des résultats, analyses et visualisations.
+
+### [4. Problèmes et Solutions](docs/problems_solutions.md)
 Documentation des difficultés rencontrées et solutions appliquées.
 
-### [4. Explications Techniques](docs/technical_explanations.md)
-Commentaires détaillés sur l'architecture et les choix techniques.
 
 ## Installation et Utilisation
 
